@@ -1,0 +1,55 @@
+{
+  "name": "rfetch",
+  "version": "0.0.1",
+  "description": "rxjs + fetch api ",
+  "main": "index.js",
+  "module": "es/index.js",
+  "types": "es/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wflixu/RFetch.git"
+  },
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist/",
+    "src/",
+    "LICENSE",
+    "package.json",
+    "README.md",
+    "tsconfig.json"
+  ],
+  "keywords": [
+    "rxjs",
+    "fetch",
+    "retry"
+  ],
+  "author": "wflixu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wflixu/RFetch/issues"
+  },
+  "homepage": "https://github.com/wflixu/RFetch#readme",
+  "devDependencies": {
+    "@rushstack/eslint-patch": "^1.1.4",
+    "@types/node": "^16.11.56",
+    "eslint": "^8.34.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "typescript": "^4.9.5"
+  },
+  "peerDependencies": {
+    "rxjs": "^7.8.0"
+  },
+  "dependencies": {
+    "rxjs": "^7.8.0"
+  }
+}
