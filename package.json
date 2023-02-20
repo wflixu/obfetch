@@ -1,5 +1,5 @@
 {
-  "name": "rxfetch",
+  "name": "ofetch",
   "version": "0.0.1",
   "description": "rxjs + fetch api ",
   "main": "index.js",
