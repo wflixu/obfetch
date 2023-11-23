@@ -21,16 +21,6 @@ jobs:
           node-version: 20
           registry-url: https://registry.npmjs.org/
           cache: "pnpm"
-      - name: Get package version
-        uses: tyankatsu0105/read-package-version-actions@v1
-        id: package-version
-
-      - name: Create a tag
-        uses: negz/create-tag@v1
-        with:
-          version: v${{ steps.package-version.outputs.version }}
-          message: "Release v${{ steps.package-version.outputs.version }}"
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install dependencies
         run: pnpm  install
