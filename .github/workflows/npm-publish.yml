@@ -11,11 +11,30 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Set pnpm
+        uses: pnpm/action-setup@v2.0.1
         with:
-          node-version: 20
-      - run: npm ci
-      - run: npm run build
+          version: 8.6.12
+      - name: Set Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18
+          registry-url: https://registry.npmjs.org/
+          cache: "pnpm"
+      - name: Get package version
+        uses: tyankatsu0105/read-package-version-actions@v1
+        id: package-version
+      - name: Create a tag
+        uses: negz/create-tag@v1
+        with:
+          version: v${{ steps.package-version.outputs.version }}
+          message: "Release v${{ steps.package-version.outputs.version }}"
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install dependencies
+        run: pnpm  install
+      - name: build package
+        run: pnpm  build
   publish-npm:
     needs: build
     runs-on: ubuntu-latest
@@ -28,3 +47,4 @@ jobs:
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
