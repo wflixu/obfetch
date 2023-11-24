@@ -136,7 +136,7 @@ export class HttpRequest<T> {
    * the `HttpParamsOptions`' `fromString` may be used. For example:
    *
    * ```
-   * new HttpParams({fromString: 'angular=awesome'})
+   * new HttpParams({fromString: 'name=awesome'})
    * ```
    */
   // TODO(issue/24571): remove '!'.

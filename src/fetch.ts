@@ -109,10 +109,6 @@ export class FetchBackend implements HttpBackend {
       let decoder: TextDecoder;
       let partialText: string | undefined;
 
-      // Perform response processing outside of Angular zone to
-      // ensure no excessive change detection runs are executed
-      // Here calling the async ReadableStreamDefaultReader.read() is responsible for triggering CD
-
       // eslint-disable-next-line no-constant-condition
       while (true) {
         const { done, value } = await reader.read();
