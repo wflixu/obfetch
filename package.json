@@ -1,13 +1,16 @@
 {
   "name": "obfetch",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "An http client based on rxjs and fetch API inspired by Angular HttpClient.",
-  "main": "./dist/index.js",
+  "main": "./dist/bundle.js",
   "type": "module",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "module": "dist/bundle.js",
+  "unpkg": "dist/bundle.umd.js",
+  "types": "typings/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "rollup --config rollup.config.mjs",
+    "tc": "tsc",
+    "cl": "rm -rf ./dist && rm -rf ./typings",
     "coverage": "vitest run --coverage",
     "test": "vitest"
   },
@@ -18,14 +21,16 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "default": "./dist/index.js"
+      "import": "./dist/bundle.mjs",
+      "require": "./dist/bundle.cjs",
+      "default": "./dist/bundle.js",
+      "types": "./typings/index.d.ts"
     }
   },
   "files": [
     "dist/",
     "src/",
+    "typings/",
     "LICENSE",
     "package.json",
     "README.md",
@@ -48,11 +53,15 @@
   },
   "homepage": "https://github.com/wflixu/obfetch#readme",
   "devDependencies": {
+    "@rollup/plugin-json": "^6.0.1",
+    "@rollup/plugin-terser": "^0.4.4",
     "@types/node": "^20.9.4",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "@typescript-eslint/parser": "^6.11.0",
     "@vitest/coverage-v8": "^0.34.6",
     "eslint": "^8.34.0",
+    "rollup": "^4.6.0",
+    "rollup-plugin-typescript2": "^0.36.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.3.2",
     "typescript-language-server": "^3.3.0",

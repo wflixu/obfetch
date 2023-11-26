@@ -20,7 +20,6 @@
     // This is needed due to https://github.com/Microsoft/TypeScript/issues/17516.
     // As tsickle will lower decorators before TS, this is not a problem for our build.
     "emitDecoratorMetadata": true,
-    "sourceMap": true,
     "inlineSources": true,
     "importHelpers": true,
     /* Visit https://aka.ms/tsconfig.json to read more about this file */
@@ -65,8 +64,8 @@
     "declaration": true,                              /* Generate .d.ts files from TypeScript and JavaScript files in your project. */
     // "declarationMap": true,                           /* Create sourcemaps for d.ts files. */
     // "emitDeclarationOnly": true,                      /* Only output d.ts files and not JavaScript files. */
-    // "sourceMap": true,                                /* Create source map files for emitted JavaScript files. */
-    // "outFile": "./",                                  /* Specify a file that bundles all outputs into one JavaScript file. If `declaration` is true, also designates a file that bundles all .d.ts output. */
+    "sourceMap": true,                                /* Create source map files for emitted JavaScript files. */
+    // "outFile": ".",                                  /* Specify a file that bundles all outputs into one JavaScript file. If `declaration` is true, also designates a file that bundles all .d.ts output. */
     "outDir": "./dist",                                   /* Specify an output folder for all emitted files. */
     // "removeComments": true,                           /* Disable emitting comments. */
     // "noEmit": true,                                   /* Disable emitting files from a compilation. */
