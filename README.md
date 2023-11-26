@@ -1,5 +1,5 @@
 # obfetch
-An http client base on rxjs + fetch inspired by Angular HttpClient
+An http client based on rxjs and fetch API inspired by Angular HttpClient.
 
 # use
 

@@ -1,0 +1,12 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {  
+      // Output settings.
+      "newLine": "LF",
+      "sourceMap": true,
+      // Type declaration settings.
+      "declaration": true,
+      "declarationDir": "typings/",
+      "declarationMap": true
+    }
+}
