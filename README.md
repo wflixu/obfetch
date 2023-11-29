@@ -21,7 +21,9 @@ npm add obfetch
 ```
 // http.ts/js
 import  { HttpClient } from 'obfetch';
-epxort  const http = new HttpClient();
+epxort  const http = new HttpClient({
+  baseURL:'http://somehost:8888/some/path'
+});
 
 // business.ts
 import {http} from 'http'

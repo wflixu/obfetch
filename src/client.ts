@@ -52,6 +52,12 @@ function addBody<T>(
   };
 }
 
+export interface RequestConfig {
+  baseURL: string;
+  timeout: number;
+  headers: Record<string, string>;
+}
+
 /**
  * Performs HTTP requests.
  * This service is available as an injectable class, with methods to perform HTTP requests.
@@ -110,8 +116,14 @@ function addBody<T>(
 
 export class HttpClient {
   private handler: HttpInterceptorHandler;
-
-  constructor() {
+  baseURL: string;
+  timeout: number;
+  commonHeaders: Record<string, string>;
+  constructor(config: Partial<RequestConfig> = {}) {
+    const { baseURL, timeout, headers } = config;
+    this.baseURL = baseURL ?? '';
+    this.timeout = timeout ?? 30000;
+    this.commonHeaders = headers ?? {};
     this.handler = new HttpInterceptorHandler();
   }
 
@@ -739,7 +751,10 @@ export class HttpClient {
       if (options.headers instanceof HttpHeaders) {
         headers = options.headers;
       } else {
-        headers = new HttpHeaders(options.headers);
+        headers = new HttpHeaders({
+          ...this.commonHeaders,
+          ...options.headers,
+        });
       }
 
       // Sort out parameters.
@@ -753,11 +768,11 @@ export class HttpClient {
           } as HttpParamsOptions);
         }
       }
-
+      const finalUrl = `${this.baseURL}${url ?? ''}`;
       // Construct the request.
       req = new HttpRequest(
         first,
-        url!,
+        finalUrl,
         options.body !== undefined ? options.body : null,
         {
           headers,
@@ -2363,56 +2378,6 @@ export class HttpClient {
     } = {}
   ): Observable<any> {
     return this.request<any>('HEAD', url, options as any);
-  }
-
-  /**
-   * Constructs a `JSONP` request for the given URL and name of the callback parameter.
-   *
-   * @param url The resource URL.
-   * @param callbackParam The callback function name.
-   *
-   * @return An `Observable` of the response object, with response body as an object.
-   */
-  jsonp(url: string, callbackParam: string): Observable<Object>;
-
-  /**
-   * Constructs a `JSONP` request for the given URL and name of the callback parameter.
-   *
-   * @param url The resource URL.
-   * @param callbackParam The callback function name.
-   *
-   * You must install a suitable interceptor, such as one provided by `HttpClientJsonpModule`.
-   * If no such interceptor is reached,
-   * then the `JSONP` request can be rejected by the configured backend.
-   *
-   * @return An `Observable` of the response object, with response body in the requested type.
-   */
-  jsonp<T>(url: string, callbackParam: string): Observable<T>;
-
-  /**
-   * Constructs an `Observable` that, when subscribed, causes a request with the special method
-   * `JSONP` to be dispatched via the interceptor pipeline.
-   * The [JSONP pattern](https://en.wikipedia.org/wiki/JSONP) works around limitations of certain
-   * API endpoints that don't support newer,
-   * and preferable [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) protocol.
-   * JSONP treats the endpoint API as a JavaScript file and tricks the browser to process the
-   * requests even if the API endpoint is not located on the same domain (origin) as the client-side
-   * application making the request.
-   * The endpoint API must support JSONP callback for JSONP requests to work.
-   * The resource API returns the JSON response wrapped in a callback function.
-   * You can pass the callback function name as one of the query parameters.
-   * Note that JSONP requests can only be used with `GET` requests.
-   *
-   * @param url The resource URL.
-   * @param callbackParam The callback function name.
-   *
-   */
-  jsonp<T>(url: string, callbackParam: string): Observable<T> {
-    return this.request<any>('JSONP', url, {
-      params: new HttpParams().append(callbackParam, 'JSONP_CALLBACK'),
-      observe: 'body',
-      responseType: 'json',
-    });
   }
 
   /**
