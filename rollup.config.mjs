@@ -16,22 +16,23 @@ const banner = `/*!
 
 /**
  * Creates an output options object for Rollup.js.
-* @param {import('rollup').OutputOptions} options
-* @returns {import('rollup').OutputOptions}
-*/
+ * @param {import('rollup').OutputOptions} options
+ * @returns {import('rollup').OutputOptions}
+ */
 function createOutputOptions(options) {
   return {
     banner,
     name: '[libraryCamelCaseName]',
     exports: 'named',
     sourcemap: true,
+    globals: options.format === 'umd' ? { rxjs: 'rxjs' } : {},
     ...options,
   };
 }
 
 /**
-* @type {import('rollup').RollupOptions}
-*/
+ * @type {import('rollup').RollupOptions}
+ */
 const options = {
   input: './src/index.ts',
   output: [
@@ -64,7 +65,7 @@ const options = {
       tsconfig: './tsconfig.bundle.json',
     }),
   ],
-  external: ['rxjs']
+  external: ['rxjs'],
 };
 
 export default options;

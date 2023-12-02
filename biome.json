@@ -12,6 +12,9 @@
     }
   },
   "linter": {
+    "ignore": [
+      "tsconfig.bundle.json"
+    ],
     "enabled": true,
     "rules": {
       "recommended": true,
@@ -37,5 +40,5 @@
   },
   "organizeImports": {
     "enabled": true
-  }
+  },
 }

@@ -28,7 +28,7 @@ const startServer = async () => {
   }
 };
 const closeServer = async () => {
-  fastify.close();
+ await fastify.close();
 };
 
 // startServer();
