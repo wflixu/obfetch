@@ -1,8 +1,6 @@
 import { Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
 
 import { HttpBackend, HttpHandler } from './backend';
-
 import { FetchBackend } from './fetch';
 import { HttpRequest } from './request';
 import { HttpEvent } from './response';
@@ -141,21 +139,6 @@ function interceptorChainEndFn(
   finalHandlerFn: HttpHandlerFn
 ): Observable<HttpEvent<any>> {
   return finalHandlerFn(req);
-}
-
-/**
- * Constructs a `ChainedInterceptorFn` which adapts a legacy `HttpInterceptor` to the
- * `ChainedInterceptorFn` interface.
- */
-function adaptLegacyInterceptorToChain(
-  chainTailFn: ChainedInterceptorFn<any>,
-  interceptor: HttpInterceptor
-): ChainedInterceptorFn<any> {
-  return (initialRequest, finalHandlerFn) =>
-    interceptor.intercept(initialRequest, {
-      handle: (downstreamRequest) =>
-        chainTailFn(downstreamRequest, finalHandlerFn),
-    });
 }
 
 /**

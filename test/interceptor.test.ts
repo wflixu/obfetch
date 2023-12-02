@@ -1,11 +1,20 @@
-import { beforeAll, describe, expect, it } from 'vitest';
+import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { HttpRequest } from '../src/request';
 import { HttpHandlerFn } from '../src/interceptor';
 import { Observable } from 'rxjs/internal/Observable';
 import { HttpEvent, HttpResponse } from '../src/response';
 import { map, tap } from 'rxjs/operators';
 import { HttpClient } from '../src/client';
-import { last, lastValueFrom } from 'rxjs';
+import { lastValueFrom } from 'rxjs';
+import { closeServer, startServer } from './mock-server.mjs';
+
+beforeAll(async () => {
+  await startServer();
+});
+
+afterAll(async () => {
+  await closeServer();
+});
 
 export function tokenInterceptor(
   req: HttpRequest<unknown>,
@@ -14,7 +23,7 @@ export function tokenInterceptor(
   const token = '7pDAGbxHSoc5rjRySY-aU5vKvRQRoP7rdNqcv8W6DKY';
   if (token) {
     const reqWithHeader = req.clone({
-      headers: req.headers.set('Authorizen', token),
+      headers: req.headers.set('authorization', token),
     });
     return next(reqWithHeader);
   }
@@ -36,23 +45,29 @@ export function responseDataFormatInterceptor(
   );
 }
 
-const http = new HttpClient();
+const http = new HttpClient({
+  baseURL: 'http://127.0.0.1:3303'
+});
 http.use([tokenInterceptor, responseDataFormatInterceptor]);
 
 describe('test Http Interceptor', () => {
   it.concurrent('modify http request', async ({ expect }) => {
     const res: any = await lastValueFrom(
-      http.get('http://127.0.0.1:8443/ping').pipe(
+      http.get('/auth').pipe(
         tap((event) => {
-          console.log('@@@@');
+          // console.log('@@@@');
         })
       )
     );
-    expect(res).toMatchInlineSnapshot('"ping success !"');
+    expect(res).toMatchInlineSnapshot(`
+      {
+        "authorization": "7pDAGbxHSoc5rjRySY-aU5vKvRQRoP7rdNqcv8W6DKY",
+      }
+    `);
   });
   it.concurrent('format response data', async ({ expect }) => {
     const res: any = await lastValueFrom(
-      http.post('http://127.0.0.1:8443/ping', { username: 'test', age: 18 })
+      http.post('/formatter', { username: 'test', age: 18 })
     );
     expect(res).toMatchInlineSnapshot(`
       {
