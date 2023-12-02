@@ -42,10 +42,7 @@ export interface HttpInterceptor {
    * if no interceptors remain in the chain.
    * @returns An observable of the event stream.
    */
-  intercept(
-    req: HttpRequest<any>,
-    next: HttpHandler
-  ): Observable<HttpEvent<any>>;
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>>;
 }
 
 /**
@@ -67,9 +64,7 @@ export interface HttpInterceptor {
  *
  * @see [HTTP Guide](guide/http-intercept-requests-and-responses)
  */
-export type HttpHandlerFn = (
-  req: HttpRequest<unknown>
-) => Observable<HttpEvent<unknown>>;
+export type HttpHandlerFn = (req: HttpRequest<unknown>) => Observable<HttpEvent<unknown>>;
 
 /**
  * An interceptor for HTTP requests made via `HttpClient`.
@@ -112,10 +107,7 @@ export type HttpHandlerFn = (
  * };
  * ```
  */
-export type HttpInterceptorFn = (
-  req: HttpRequest<unknown>,
-  next: HttpHandlerFn
-) => Observable<HttpEvent<unknown>>;
+export type HttpInterceptorFn = (req: HttpRequest<unknown>, next: HttpHandlerFn) => Observable<HttpEvent<unknown>>;
 
 /**
  * Function which invokes an HTTP interceptor chain.
@@ -131,13 +123,10 @@ export type HttpInterceptorFn = (
  */
 type ChainedInterceptorFn<RequestT> = (
   req: HttpRequest<RequestT>,
-  finalHandlerFn: HttpHandlerFn
+  finalHandlerFn: HttpHandlerFn,
 ) => Observable<HttpEvent<RequestT>>;
 
-function interceptorChainEndFn(
-  req: HttpRequest<any>,
-  finalHandlerFn: HttpHandlerFn
-): Observable<HttpEvent<any>> {
+function interceptorChainEndFn(req: HttpRequest<any>, finalHandlerFn: HttpHandlerFn): Observable<HttpEvent<any>> {
   return finalHandlerFn(req);
 }
 
@@ -147,13 +136,11 @@ function interceptorChainEndFn(
  */
 function chainedInterceptorFn(
   chainTailFn: ChainedInterceptorFn<unknown>,
-  interceptorFn: HttpInterceptorFn
+  interceptorFn: HttpInterceptorFn,
 ): ChainedInterceptorFn<unknown> {
   // clang-format off
   return (initialRequest, finalHandlerFn) =>
-    interceptorFn(initialRequest, (downstreamRequest) =>
-      chainTailFn(downstreamRequest, finalHandlerFn)
-    );
+    interceptorFn(initialRequest, (downstreamRequest) => chainTailFn(downstreamRequest, finalHandlerFn));
 
   // clang-format on
 }
@@ -180,24 +167,18 @@ export class HttpInterceptorHandler extends HttpHandler {
     this.httpInterceptorFns.push(...fns);
   }
 
-  override handle(
-    initialRequest: HttpRequest<any>
-  ): Observable<HttpEvent<any>> {
+  override handle(initialRequest: HttpRequest<any>): Observable<HttpEvent<any>> {
     if (this.chain === null) {
       // Note: interceptors are wrapped right-to-left so that final execution order is
       // left-to-right. That is, if `dedupedInterceptorFns` is the array `[a, b, c]`, we want to
       // produce a chain that is conceptually `c(b(a(end)))`, which we build from the inside
       // out.
       this.chain = this.httpInterceptorFns.reduceRight(
-        (nextSequencedFn, interceptorFn) =>
-          chainedInterceptorFn(nextSequencedFn, interceptorFn),
-        interceptorChainEndFn as ChainedInterceptorFn<unknown>
+        (nextSequencedFn, interceptorFn) => chainedInterceptorFn(nextSequencedFn, interceptorFn),
+        interceptorChainEndFn as ChainedInterceptorFn<unknown>,
       );
     }
 
-    return this.chain(initialRequest, (downstreamRequest) =>
-      this.backend.handle(downstreamRequest)
-    );
+    return this.chain(initialRequest, (downstreamRequest) => this.backend.handle(downstreamRequest));
   }
 }
-

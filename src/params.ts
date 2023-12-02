@@ -29,10 +29,7 @@ const STANDARD_ENCODING_REPLACEMENTS: { [x: string]: string } = {
 };
 
 function standardEncoding(v: string): string {
-  return encodeURIComponent(v).replace(
-    STANDARD_ENCODING_REGEX,
-    (s, t) => STANDARD_ENCODING_REPLACEMENTS[t] ?? s
-  );
+  return encodeURIComponent(v).replace(STANDARD_ENCODING_REGEX, (s, t) => STANDARD_ENCODING_REPLACEMENTS[t] ?? s);
 }
 
 /**
@@ -83,10 +80,7 @@ export class HttpUrlEncodingCodec implements HttpParameterCodec {
   }
 }
 
-function paramParser(
-  rawParams: string,
-  codec: HttpParameterCodec
-): Map<string, string[]> {
+function paramParser(rawParams: string, codec: HttpParameterCodec): Map<string, string[]> {
   const map = new Map<string, string[]>();
   if (rawParams.length > 0) {
     // The `window.location.search` can be used while creating an instance of the `HttpParams` class
@@ -98,10 +92,7 @@ function paramParser(
       const [key, val]: string[] =
         eqIdx === -1
           ? [codec.decodeKey(param), '']
-          : [
-            codec.decodeKey(param.slice(0, eqIdx)),
-            codec.decodeValue(param.slice(eqIdx + 1)),
-          ];
+          : [codec.decodeKey(param.slice(0, eqIdx)), codec.decodeValue(param.slice(eqIdx + 1))];
       const list = map.get(key) || [];
       list.push(val);
       map.set(key, list);
@@ -134,11 +125,7 @@ export interface HttpParamsOptions {
 
   /** Object map of the HTTP parameters. Mutually exclusive with `fromString`. */
   fromObject?: {
-    [param: string]:
-      | string
-      | number
-      | boolean
-      | ReadonlyArray<string | number | boolean>;
+    [param: string]: string | number | boolean | ReadonlyArray<string | number | boolean>;
   };
 
   /** Encoding codec used to parse and serialize the parameters. */
@@ -172,9 +159,7 @@ export class HttpParams {
       Object.keys(options.fromObject).forEach((key) => {
         const value = (options.fromObject as any)[key];
         // convert the values to strings
-        const values = Array.isArray(value)
-          ? value.map(valueToString)
-          : [valueToString(value)];
+        const values = Array.isArray(value) ? value.map(valueToString) : [valueToString(value)];
         this.map!.set(key, values);
       });
     } else {
@@ -241,11 +226,7 @@ export class HttpParams {
    * @return A new body with the new value.
    */
   appendAll(params: {
-    [param: string]:
-      | string
-      | number
-      | boolean
-      | ReadonlyArray<string | number | boolean>;
+    [param: string]: string | number | boolean | ReadonlyArray<string | number | boolean>;
   }): HttpParams {
     const updates: Update[] = [];
     Object.keys(params).forEach((param) => {
@@ -325,36 +306,32 @@ export class HttpParams {
     }
     if (this.cloneFrom !== null) {
       this.cloneFrom.init();
-      this.cloneFrom
-        .keys()
-        .forEach((key) => this.map!.set(key, this.cloneFrom!.map!.get(key)!));
+      this.cloneFrom.keys().forEach((key) => this.map!.set(key, this.cloneFrom!.map!.get(key)!));
       this.updates!.forEach((update) => {
         // eslint-disable-next-line default-case
         switch (update.op) {
-        case 'a':
-        case 's':
-          const base =
-              (update.op === 'a' ? this.map!.get(update.param) : undefined) ||
-              [];
-          base.push(valueToString(update.value!));
+          case 'a':
+          case 's':
+            const base = (update.op === 'a' ? this.map!.get(update.param) : undefined) || [];
+            base.push(valueToString(update.value!));
             this.map!.set(update.param, base);
-          break;
-        case 'd':
-          if (update.value !== undefined) {
-            const base = this.map!.get(update.param) || [];
-            const idx = base.indexOf(valueToString(update.value));
-            if (idx !== -1) {
-              base.splice(idx, 1);
-            }
-            if (base.length > 0) {
+            break;
+          case 'd':
+            if (update.value !== undefined) {
+              const base = this.map!.get(update.param) || [];
+              const idx = base.indexOf(valueToString(update.value));
+              if (idx !== -1) {
+                base.splice(idx, 1);
+              }
+              if (base.length > 0) {
                 this.map!.set(update.param, base);
-            } else {
+              } else {
                 this.map!.delete(update.param);
-            }
-          } else {
+              }
+            } else {
               this.map!.delete(update.param);
               break;
-          }
+            }
         }
       });
       this.cloneFrom = this.updates = null;

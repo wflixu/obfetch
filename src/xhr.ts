@@ -1,4 +1,3 @@
-
 import { from, Observable, Observer, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
@@ -61,11 +60,8 @@ export class HttpXhrBackend implements HttpBackend {
     // Check whether this factory has a special function to load an XHR implementation
     // for various non-browser environments. We currently limit it to only `ServerXhr`
     // class, which needs to load an XHR implementation.
-    const xhrFactory: XhrFactory & { ɵloadImpl?: () => Promise<void> } =
-      this.xhrFactory;
-    const source: Observable<void | null> = xhrFactory.ɵloadImpl
-      ? from(xhrFactory.ɵloadImpl())
-      : of(null);
+    const xhrFactory: XhrFactory & { ɵloadImpl?: () => Promise<void> } = this.xhrFactory;
+    const source: Observable<void | null> = xhrFactory.ɵloadImpl ? from(xhrFactory.ɵloadImpl()) : of(null);
 
     return source.pipe(
       switchMap(() => {
@@ -80,9 +76,7 @@ export class HttpXhrBackend implements HttpBackend {
           }
 
           // Add all the requested headers.
-          req.headers.forEach((name, values) =>
-            xhr.setRequestHeader(name, values.join(','))
-          );
+          req.headers.forEach((name, values) => xhr.setRequestHeader(name, values.join(',')));
 
           // Add an Accept header if one isn't present already.
           if (!req.headers.has('Accept')) {
@@ -107,9 +101,7 @@ export class HttpXhrBackend implements HttpBackend {
             // xhr.response will be null, and xhr.responseText cannot be accessed to
             // retrieve the prefixed JSON data in order to strip the prefix. Thus, all JSON
             // is parsed by first requesting text and then applying JSON.parse.
-            xhr.responseType = (
-              responseType !== 'json' ? responseType : 'text'
-            ) as any;
+            xhr.responseType = (responseType !== 'json' ? responseType : 'text') as any;
           }
 
           // Serialize the request body if one is present. If not, this will be set to null.
@@ -162,10 +154,7 @@ export class HttpXhrBackend implements HttpBackend {
 
             if (status !== HttpStatusCode.NoContent) {
               // Use XMLHttpRequest.response if set, responseText otherwise.
-              body =
-                typeof xhr.response === 'undefined'
-                  ? xhr.responseText
-                  : xhr.response;
+              body = typeof xhr.response === 'undefined' ? xhr.responseText : xhr.response;
             }
 
             // Normalize another potential bug (this one comes from CORS).
@@ -215,7 +204,7 @@ export class HttpXhrBackend implements HttpBackend {
                   status,
                   statusText,
                   url: url || undefined,
-                })
+                }),
               );
               // The full body has been received and delivered, no further events
               // are possible. This request is complete.
@@ -230,7 +219,7 @@ export class HttpXhrBackend implements HttpBackend {
                   status,
                   statusText,
                   url: url || undefined,
-                })
+                }),
               );
             }
           };
@@ -349,7 +338,7 @@ export class HttpXhrBackend implements HttpBackend {
             }
           };
         });
-      })
+      }),
     );
   }
 }

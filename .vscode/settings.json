@@ -1,33 +1,27 @@
 {
+  "editor.formatOnSave": true,
+  "editor.formatOnSaveMode": "modificationsIfAvailable",
+  "editor.defaultFormatter": "biomejs.biome",
+  "[javascript]": {
+    "editor.formatOnSave": true
+  },
+  "[json]": {
+    "editor.formatOnSave": true
+  },
+  "[jsonc]": {
+    "editor.formatOnSave": false
+  },
+  "[markdown]": {
+    "editor.formatOnSave": false
+  },
+  "[typescript]": {
     "editor.formatOnSave": true,
-    "editor.codeActionsOnSave": {
-      // For ESLint
-      "source.fixAll.eslint": true,
-      // For Stylelint
-      "source.fixAll.stylelint": true
-    },
-    "stylelint.validate": ["css", "less", "postcss", "scss", "vue", "sass", "html"],
-    "[markdown]": {
-      "editor.formatOnSave": false
-    },
-    "[javascript]": {
-      "editor.formatOnSave": false
-    },
-    "[json]": {
-      "editor.formatOnSave": false
-    },
-    "[jsonc]": {
-      "editor.formatOnSave": false
-    },
-    "files.watcherExclude": {
-      "**/.git/*/**": true,
-      "**/node_modules/*/**": true,
-      "**/dist/*/**": true,
-      "**/coverage/*/**": true
-    },
-    "files.associations": {
-      "*.json": "jsonc",
-      ".prettierrc": "jsonc",
-      ".stylelintrc": "jsonc"
-    },
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "files.watcherExclude": {
+    "**/.git/*/**": true,
+    "**/coverage/*/**": true,
+    "**/dist/*/**": true,
+    "**/node_modules/*/**": true
   }
+}

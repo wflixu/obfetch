@@ -26,9 +26,7 @@ describe('suite httclient', () => {
     `);
   });
   it('serial test post', async () => {
-    const res: any = await lastValueFrom(
-      http.post('/ping', { username: 'test', age: 18 })
-    );
+    const res: any = await lastValueFrom(http.post('/ping', { username: 'test', age: 18 }));
     expect(res).toMatchInlineSnapshot(`
       {
         "age": 18,

@@ -16,10 +16,7 @@ afterAll(async () => {
   await closeServer();
 });
 
-export function tokenInterceptor(
-  req: HttpRequest<unknown>,
-  next: HttpHandlerFn
-): Observable<HttpEvent<unknown>> {
+export function tokenInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
   const token = '7pDAGbxHSoc5rjRySY-aU5vKvRQRoP7rdNqcv8W6DKY';
   if (token) {
     const reqWithHeader = req.clone({
@@ -33,7 +30,7 @@ export function tokenInterceptor(
 
 export function responseDataFormatInterceptor(
   req: HttpRequest<unknown>,
-  next: HttpHandlerFn
+  next: HttpHandlerFn,
 ): Observable<HttpEvent<unknown>> {
   return next(req).pipe(
     map((event: HttpEvent<any>) => {
@@ -41,12 +38,12 @@ export function responseDataFormatInterceptor(
         return event.clone({ body: event.body?.data });
       }
       return event;
-    })
+    }),
   );
 }
 
 const http = new HttpClient({
-  baseURL: 'http://127.0.0.1:3303'
+  baseURL: 'http://127.0.0.1:3303',
 });
 http.use([tokenInterceptor, responseDataFormatInterceptor]);
 
@@ -56,8 +53,8 @@ describe('test Http Interceptor', () => {
       http.get('/auth').pipe(
         tap((event) => {
           // console.log('@@@@');
-        })
-      )
+        }),
+      ),
     );
     expect(res).toMatchInlineSnapshot(`
       {
@@ -66,9 +63,7 @@ describe('test Http Interceptor', () => {
     `);
   });
   it.concurrent('format response data', async ({ expect }) => {
-    const res: any = await lastValueFrom(
-      http.post('/formatter', { username: 'test', age: 18 })
-    );
+    const res: any = await lastValueFrom(http.post('/formatter', { username: 'test', age: 18 }));
     expect(res).toMatchInlineSnapshot(`
       {
         "age": 18,
