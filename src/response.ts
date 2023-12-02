@@ -178,7 +178,7 @@ export abstract class HttpResponseBase {
       url?: string;
     },
     defaultStatus: number = HttpStatusCode.Ok,
-    defaultStatusText: string = 'OK'
+    defaultStatusText = 'OK',
   ) {
     // If the hash has values passed, use them to initialize the response.
     // Otherwise use the default values.
@@ -217,7 +217,7 @@ export class HttpResponse<T> extends HttpResponseBase {
       status?: number;
       statusText?: string;
       url?: string;
-    } = {}
+    } = {},
   ) {
     super(init);
     this.body = init.body !== undefined ? init.body : null;
@@ -246,7 +246,7 @@ export class HttpResponse<T> extends HttpResponseBase {
       status?: number;
       statusText?: string;
       url?: string;
-    } = {}
+    } = {},
   ): HttpResponse<any> {
     return new HttpResponse<any>({
       body: update.body !== undefined ? update.body : this.body,
@@ -270,19 +270,20 @@ export class HttpHeaderResponse extends HttpResponseBase {
   /**
    * Create a new `HttpHeaderResponse` with the given parameters.
    */
+
+  // biome-ignore lint/complexity/noUselessConstructor: <explanation>
   constructor(
     init: {
       headers?: HttpHeaders;
       status?: number;
       statusText?: string;
       url?: string;
-    } = {}
+    } = {},
   ) {
     super(init);
   }
 
-  override readonly type: HttpEventType.ResponseHeader =
-    HttpEventType.ResponseHeader;
+  override readonly type: HttpEventType.ResponseHeader = HttpEventType.ResponseHeader;
 
   /**
    * Copy this `HttpHeaderResponse`, overriding its contents with the
@@ -294,7 +295,7 @@ export class HttpHeaderResponse extends HttpResponseBase {
       status?: number;
       statusText?: string;
       url?: string;
-    } = {}
+    } = {},
   ): HttpHeaderResponse {
     // Perform a straightforward initialization of the new HttpHeaderResponse,
     // overriding the current parameters with new ones if given.
@@ -314,12 +315,7 @@ export class HttpHeaderResponse extends HttpResponseBase {
  *
  * @publicApi
  */
-export type HttpEvent<T> =
-  | HttpSentEvent
-  | HttpHeaderResponse
-  | HttpResponse<T>
-  | HttpProgressEvent
-  | HttpUserEvent<T>;
+export type HttpEvent<T> = HttpSentEvent | HttpHeaderResponse | HttpResponse<T> | HttpProgressEvent | HttpUserEvent<T>;
 
 /**
  * A response that represents an error or failure, either from a
@@ -358,13 +354,9 @@ export class HttpErrorResponse extends HttpResponseBase implements Error {
     // a protocol-level failure of some sort. Either the request failed in transit
     // or the server returned an unsuccessful status code.
     if (this.status >= 200 && this.status < 300) {
-      this.message = `Http failure during parsing for ${
-        init.url || '(unknown url)'
-      }`;
+      this.message = `Http failure during parsing for ${init.url || '(unknown url)'}`;
     } else {
-      this.message = `Http failure response for ${
-        init.url || '(unknown url)'
-      }: ${init.status} ${init.statusText}`;
+      this.message = `Http failure response for ${init.url || '(unknown url)'}: ${init.status} ${init.statusText}`;
     }
     this.error = init.error || null;
   }

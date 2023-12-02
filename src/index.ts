@@ -9,7 +9,7 @@ export {
   HttpHandlerFn,
   HttpInterceptor,
   HttpInterceptorFn,
-  HttpInterceptorHandler
+  HttpInterceptorHandler,
 } from './interceptor';
 
 export {
@@ -36,4 +36,3 @@ export {
 } from './response';
 
 export { HttpXhrBackend } from './xhr';
-

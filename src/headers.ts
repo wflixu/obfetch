@@ -35,12 +35,7 @@ export class HttpHeaders {
 
   /**  Constructs a new HTTP header object with the given values.*/
 
-  constructor(
-    headers?:
-      | string
-      | { [name: string]: string | number | (string | number)[] }
-      | Headers
-  ) {
+  constructor(headers?: string | { [name: string]: string | number | (string | number)[] } | Headers) {
     if (!headers) {
       this.headers = new Map<string, string[]>();
     } else if (typeof headers === 'string') {
@@ -196,10 +191,7 @@ export class HttpHeaders {
 
   private clone(update: Update): HttpHeaders {
     const clone = new HttpHeaders();
-    clone.lazyInit =
-      !!this.lazyInit && this.lazyInit instanceof HttpHeaders
-        ? this.lazyInit
-        : this;
+    clone.lazyInit = !!this.lazyInit && this.lazyInit instanceof HttpHeaders ? this.lazyInit : this;
     clone.lazyUpdate = (this.lazyUpdate || []).concat([update]);
     return clone;
   }
@@ -207,47 +199,44 @@ export class HttpHeaders {
   private applyUpdate(update: Update): void {
     const key = update.name.toLowerCase();
     switch (update.op) {
-    case 'a':
-    case 's':
-      let value = update.value!;
-      if (typeof value === 'string') {
-        value = [value];
-      }
-      if (value.length === 0) {
-        return;
-      }
-      this.maybeSetNormalizedName(update.name, key);
-      const base =
-          (update.op === 'a' ? this.headers.get(key) : undefined) || [];
-      base.push(...value);
-      this.headers.set(key, base);
-      break;
-    case 'd':
-      const toDelete = update.value as string | undefined;
-      if (!toDelete) {
-        this.headers.delete(key);
-        this.normalizedNames.delete(key);
-      } else {
-        let existing = this.headers.get(key);
-        if (!existing) {
+      case 'a':
+      case 's':
+        let value = update.value!;
+        if (typeof value === 'string') {
+          value = [value];
+        }
+        if (value.length === 0) {
           return;
         }
-        existing = existing.filter((value) => toDelete.indexOf(value) === -1);
-        if (existing.length === 0) {
+        this.maybeSetNormalizedName(update.name, key);
+        const base = (update.op === 'a' ? this.headers.get(key) : undefined) || [];
+        base.push(...value);
+        this.headers.set(key, base);
+        break;
+      case 'd':
+        const toDelete = update.value as string | undefined;
+        if (!toDelete) {
           this.headers.delete(key);
           this.normalizedNames.delete(key);
         } else {
-          this.headers.set(key, existing);
+          let existing = this.headers.get(key);
+          if (!existing) {
+            return;
+          }
+          existing = existing.filter((value) => toDelete.indexOf(value) === -1);
+          if (existing.length === 0) {
+            this.headers.delete(key);
+            this.normalizedNames.delete(key);
+          } else {
+            this.headers.set(key, existing);
+          }
         }
-      }
-      break;
+        break;
     }
   }
 
   private setHeaderEntries(name: string, values: any) {
-    const headerValues = (Array.isArray(values) ? values : [values]).map(
-      (value) => value.toString()
-    );
+    const headerValues = (Array.isArray(values) ? values : [values]).map((value) => value.toString());
     const key = name.toLowerCase();
     this.headers.set(key, headerValues);
     this.maybeSetNormalizedName(name, key);
@@ -259,7 +248,7 @@ export class HttpHeaders {
   forEach(fn: (name: string, values: string[]) => void) {
     this.init();
     Array.from(this.normalizedNames.keys()).forEach((key) =>
-      fn(this.normalizedNames.get(key)!, this.headers.get(key)!)
+      fn(this.normalizedNames.get(key)!, this.headers.get(key)!),
     );
   }
 }
@@ -270,16 +259,13 @@ export class HttpHeaders {
  * header value is present.
  */
 function assertValidHeaders(
-  headers: Record<string, unknown> | Headers
+  headers: Record<string, unknown> | Headers,
 ): asserts headers is Record<string, string | string[] | number | number[]> {
   for (const [key, value] of Object.entries(headers)) {
-    if (
-      !(typeof value === 'string' || typeof value === 'number') &&
-      !Array.isArray(value)
-    ) {
+    if (!(typeof value === 'string' || typeof value === 'number') && !Array.isArray(value)) {
       throw new Error(
         `Unexpected value of the \`${key}\` header provided. ` +
-          `Expecting either a string, a number or an array, but got: \`${value}\`.`
+          `Expecting either a string, a number or an array, but got: \`${value}\`.`,
       );
     }
   }

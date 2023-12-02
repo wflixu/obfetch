@@ -1,6 +1,6 @@
 {
   "name": "obfetch",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "description": "A http client based on rxjs and fetch API inspired by Angular HttpClient.",
   "main": "./dist/bundle.js",
   "type": "module",
@@ -53,6 +53,7 @@
   },
   "homepage": "https://github.com/wflixu/obfetch#readme",
   "devDependencies": {
+    "@biomejs/biome": "1.4.1",
     "@rollup/plugin-json": "^6.0.1",
     "@rollup/plugin-terser": "^0.4.4",
     "@types/node": "^20.9.4",
@@ -60,6 +61,7 @@
     "@typescript-eslint/parser": "^6.11.0",
     "@vitest/coverage-v8": "^0.34.6",
     "eslint": "^8.34.0",
+    "fastify": "^4.24.3",
     "rollup": "^4.6.0",
     "rollup-plugin-typescript2": "^0.36.0",
     "ts-node": "^10.9.1",

@@ -49,7 +49,7 @@ export class FetchBackend implements HttpBackend {
     return new Observable((observer) => {
       const aborter = new AbortController();
       this.doRequest(request, aborter.signal, observer).then(noop, (error) =>
-        observer.error(new HttpErrorResponse({ error }))
+        observer.error(new HttpErrorResponse({ error })),
       );
       return () => aborter.abort();
     });
@@ -58,7 +58,7 @@ export class FetchBackend implements HttpBackend {
   private async doRequest(
     request: HttpRequest<any>,
     signal: AbortSignal,
-    observer: Observer<HttpEvent<any>>
+    observer: Observer<HttpEvent<any>>,
   ): Promise<void> {
     const init = this.createRequestInit(request);
     let response;
@@ -81,7 +81,7 @@ export class FetchBackend implements HttpBackend {
           statusText: error.statusText,
           url: request.urlWithParams,
           headers: error.headers,
-        })
+        }),
       );
       return;
     }
@@ -94,9 +94,7 @@ export class FetchBackend implements HttpBackend {
     let body: string | ArrayBuffer | Blob | object | null = null;
 
     if (request.reportProgress) {
-      observer.next(
-        new HttpHeaderResponse({ headers, status, statusText, url })
-      );
+      observer.next(new HttpHeaderResponse({ headers, status, statusText, url }));
     }
 
     if (response.body) {
@@ -155,7 +153,7 @@ export class FetchBackend implements HttpBackend {
             status: response.status,
             statusText: response.statusText,
             url: getResponseUrl(response) ?? request.urlWithParams,
-          })
+          }),
         );
         return;
       }
@@ -180,7 +178,7 @@ export class FetchBackend implements HttpBackend {
           status,
           statusText,
           url,
-        })
+        }),
       );
 
       // The full body has been received and delivered, no further events
@@ -194,7 +192,7 @@ export class FetchBackend implements HttpBackend {
           status,
           statusText,
           url,
-        })
+        }),
       );
     }
   }
@@ -202,23 +200,22 @@ export class FetchBackend implements HttpBackend {
   private parseBody(
     request: HttpRequest<any>,
     binContent: Uint8Array,
-    contentType: string
+    contentType: string,
   ): string | ArrayBuffer | Blob | object | null {
+    
     switch (request.responseType) {
-    case 'json':
-      // stripping the XSSI when present
-      const text = new TextDecoder()
-        .decode(binContent)
-        .replace(XSSI_PREFIX, '');
-      return text === '' ? null : (JSON.parse(text) as object);
-    case 'text':
-      return new TextDecoder().decode(binContent);
-    case 'blob':
-      return new Blob([binContent], { type: contentType });
-    case 'arraybuffer':
-      return binContent.buffer;
-    default:
-      return null;
+      case 'json':
+        // stripping the XSSI when present
+        const text = new TextDecoder().decode(binContent).replace(XSSI_PREFIX, '');
+        return text === '' ? null : (JSON.parse(text) as object);
+      case 'text':
+        return new TextDecoder().decode(binContent);
+      case 'blob':
+        return new Blob([binContent], { type: contentType });
+      case 'arraybuffer':
+        return binContent.buffer;
+      default:
+        return null;
     }
   }
 
@@ -226,11 +223,10 @@ export class FetchBackend implements HttpBackend {
     // We could share some of this logic with the XhrBackend
 
     const headers: Record<string, string> = {};
-    const credentials: RequestCredentials | undefined = req.withCredentials
-      ? 'include'
-      : undefined;
+    const credentials: RequestCredentials | undefined = req.withCredentials ? 'include' : undefined;
 
-    // Setting all the requested headers.
+    // Setting all the requested headers.>
+
     req.headers.forEach((name, values) => (headers[name] = values.join(',')));
 
     // Add an Accept header if one isn't present already.
