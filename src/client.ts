@@ -771,7 +771,6 @@ export class HttpClient {
                 return res.body;
               }),
             );
-          case 'json':
           default:
             // No validation needed for JSON responses, as they can be of any type.
             return res$.pipe(map((res: HttpResponse<any>) => res.body));

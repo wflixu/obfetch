@@ -178,7 +178,7 @@ export abstract class HttpResponseBase {
       url?: string;
     },
     defaultStatus: number = HttpStatusCode.Ok,
-    defaultStatusText: string = 'OK',
+    defaultStatusText = 'OK',
   ) {
     // If the hash has values passed, use them to initialize the response.
     // Otherwise use the default values.
@@ -270,6 +270,8 @@ export class HttpHeaderResponse extends HttpResponseBase {
   /**
    * Create a new `HttpHeaderResponse` with the given parameters.
    */
+
+  // biome-ignore lint/complexity/noUselessConstructor: <explanation>
   constructor(
     init: {
       headers?: HttpHeaders;

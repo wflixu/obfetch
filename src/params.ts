@@ -281,7 +281,7 @@ export class HttpParams {
           // `b: []` produces `''`
           // `c: ['1', '2']` produces `'c=1&c=2'`
           return this.map!.get(key)!
-            .map((value) => eKey + '=' + this.encoder.encodeValue(value))
+            .map((value) => `${eKey}=${this.encoder.encodeValue(value)}`)
             .join('&');
         })
         // filter out empty values because `b: []` produces `''`

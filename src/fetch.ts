@@ -202,6 +202,7 @@ export class FetchBackend implements HttpBackend {
     binContent: Uint8Array,
     contentType: string,
   ): string | ArrayBuffer | Blob | object | null {
+    
     switch (request.responseType) {
       case 'json':
         // stripping the XSSI when present
@@ -224,7 +225,8 @@ export class FetchBackend implements HttpBackend {
     const headers: Record<string, string> = {};
     const credentials: RequestCredentials | undefined = req.withCredentials ? 'include' : undefined;
 
-    // Setting all the requested headers.
+    // Setting all the requested headers.>
+
     req.headers.forEach((name, values) => (headers[name] = values.join(',')));
 
     // Add an Accept header if one isn't present already.

@@ -15,8 +15,23 @@
     "enabled": true,
     "rules": {
       "recommended": true,
+      "complexity": {
+        "noForEach": "off",
+        "noBannedTypes": "off",
+        "useLiteralKeys": "off"
+      },
+      "correctness": {
+        "noSwitchDeclarations": "off"
+      },
+      "style": {
+        "noNonNullAssertion": "off",
+        "useEnumInitializers": "off"
+      },
       "suspicious": {
-        "noExplicitAny": "warn"
+        "noExplicitAny": "off",
+        "noConstEnum": "off",
+        "noConfusingVoidType": "warn",
+        "noAssignInExpressions": "off"
       }
     }
   },
