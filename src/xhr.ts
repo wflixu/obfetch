@@ -76,7 +76,7 @@ export class HttpXhrBackend implements HttpBackend {
           }
 
           // Add all the requested headers.
-          req.headers.forEach((name, values) => xhr.setRequestHeader(name, values.join(',')));
+          req.headers.forEach((name: string, values) => xhr.setRequestHeader(name, values.join(',')));
 
           // Add an Accept header if one isn't present already.
           if (!req.headers.has('Accept')) {

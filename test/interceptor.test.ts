@@ -10,11 +10,11 @@ import { closeServer, startServer } from './mock-server.mjs';
 
 beforeAll(async () => {
   await startServer();
+  return async () => {
+    await closeServer();
+  };
 });
 
-afterAll(async () => {
-  await closeServer();
-});
 
 export function tokenInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
   const token = '7pDAGbxHSoc5rjRySY-aU5vKvRQRoP7rdNqcv8W6DKY';

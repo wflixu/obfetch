@@ -58,7 +58,7 @@ export class HttpHeaders {
       };
     } else if (typeof Headers !== 'undefined' && headers instanceof Headers) {
       this.headers = new Map<string, string[]>();
-      headers.forEach((values: string, name: string) => {
+      Object.entries(headers).forEach(([name, values]) => {
         this.setHeaderEntries(name, values);
       });
     } else {

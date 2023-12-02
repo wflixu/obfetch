@@ -227,7 +227,7 @@ export class FetchBackend implements HttpBackend {
 
     // Setting all the requested headers.>
 
-    req.headers.forEach((name, values) => (headers[name] = values.join(',')));
+    req.headers.forEach((name: string, values) => (headers[name] = values.join(',')));
 
     // Add an Accept header if one isn't present already.
     headers['Accept'] ??= 'application/json, text/plain, */*';

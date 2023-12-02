@@ -10,14 +10,15 @@ const http = new HttpClient({
 
 beforeAll(async () => {
   await startServer();
+  return async () => {
+    await closeServer();
+  };
 });
 
-afterAll(async () => {
-  await closeServer();
-});
+
 
 describe('suite httclient', () => {
-  it('serial test get', async () => {
+  it.concurrent('serial test get', async ({ expect }) => {
     const res: any = await lastValueFrom(http.get('/ping'));
     expect(res).toMatchInlineSnapshot(`
       {
@@ -25,7 +26,7 @@ describe('suite httclient', () => {
       }
     `);
   });
-  it('serial test post', async () => {
+  it.concurrent('serial test post', async ({ expect }) => {
     const res: any = await lastValueFrom(http.post('/ping', { username: 'test', age: 18 }));
     expect(res).toMatchInlineSnapshot(`
       {
