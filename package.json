@@ -1,6 +1,6 @@
 {
   "name": "obfetch",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "A http client based on rxjs and fetch API inspired by Angular HttpClient.",
   "main": "./dist/bundle.js",
   "type": "module",
