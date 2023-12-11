@@ -1,7 +1,6 @@
 import { Observable, of } from 'rxjs';
 import { concatMap, filter, map } from 'rxjs/operators';
 
-import { HttpContext } from './context';
 import { HttpHeaders } from './headers';
 import { HttpParams, HttpParamsOptions } from './params';
 import { HttpRequest } from './request';
@@ -21,7 +20,6 @@ import { HttpInterceptorFn, HttpInterceptorHandler } from './interceptor';
 function addBody<T>(
   options: {
     headers?: HttpHeaders | { [header: string]: string | string[] };
-    context?: HttpContext;
     observe?: 'body' | 'events' | 'response';
     params?:
       | HttpParams
@@ -38,7 +36,6 @@ function addBody<T>(
   return {
     body,
     headers: options.headers,
-    context: options.context,
     observe: options.observe,
     params: options.params,
     reportProgress: options.reportProgress,
@@ -151,7 +148,7 @@ export class HttpClient {
     options: {
       body?: any;
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body';
       params?:
         | HttpParams
@@ -181,7 +178,7 @@ export class HttpClient {
     options: {
       body?: any;
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body';
       params?:
         | HttpParams
@@ -211,7 +208,7 @@ export class HttpClient {
     options: {
       body?: any;
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body';
       params?:
         | HttpParams
@@ -242,7 +239,7 @@ export class HttpClient {
     options: {
       body?: any;
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -274,7 +271,7 @@ export class HttpClient {
       body?: any;
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'events';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -305,7 +302,7 @@ export class HttpClient {
       body?: any;
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'events';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -335,7 +332,7 @@ export class HttpClient {
     options: {
       body?: any;
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       reportProgress?: boolean;
       observe: 'events';
       params?:
@@ -366,7 +363,7 @@ export class HttpClient {
     options: {
       body?: any;
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       reportProgress?: boolean;
       observe: 'events';
       params?:
@@ -397,7 +394,7 @@ export class HttpClient {
       body?: any;
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'response';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -426,7 +423,7 @@ export class HttpClient {
       body?: any;
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'response';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -456,7 +453,7 @@ export class HttpClient {
       body?: any;
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'response';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -486,7 +483,7 @@ export class HttpClient {
     options: {
       body?: any;
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       reportProgress?: boolean;
       observe: 'response';
       params?:
@@ -515,7 +512,7 @@ export class HttpClient {
     options: {
       body?: any;
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       reportProgress?: boolean;
       observe: 'response';
       params?:
@@ -545,7 +542,7 @@ export class HttpClient {
     options?: {
       body?: any;
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body';
       params?:
         | HttpParams
@@ -575,7 +572,7 @@ export class HttpClient {
     options?: {
       body?: any;
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body';
       params?:
         | HttpParams
@@ -604,7 +601,7 @@ export class HttpClient {
     options?: {
       body?: any;
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -650,7 +647,7 @@ export class HttpClient {
     options: {
       body?: any;
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body' | 'events' | 'response';
       params?:
         | HttpParams
@@ -700,7 +697,6 @@ export class HttpClient {
       // Construct the request.
       req = new HttpRequest(first, finalUrl, options.body !== undefined ? options.body : null, {
         headers,
-        context: options.context,
         params,
         reportProgress: options.reportProgress,
         // By default, JSON is assumed to be returned for all calls.
@@ -797,7 +793,7 @@ export class HttpClient {
     url: string,
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body';
       params?:
         | HttpParams
@@ -824,7 +820,7 @@ export class HttpClient {
     url: string,
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body';
       params?:
         | HttpParams
@@ -851,7 +847,7 @@ export class HttpClient {
     url: string,
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body';
       params?:
         | HttpParams
@@ -880,7 +876,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'events';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -908,7 +904,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'events';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -936,7 +932,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'events';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -964,7 +960,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'events';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -992,7 +988,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'events';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -1019,7 +1015,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'response';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -1046,7 +1042,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'response';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -1073,7 +1069,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'response';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -1101,7 +1097,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'response';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -1128,7 +1124,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'response';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -1154,7 +1150,7 @@ export class HttpClient {
     url: string,
     options?: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body';
       params?:
         | HttpParams
@@ -1181,7 +1177,7 @@ export class HttpClient {
     url: string,
     options?: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body';
       params?:
         | HttpParams
@@ -1208,7 +1204,7 @@ export class HttpClient {
     url: string,
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body' | 'events' | 'response';
       params?:
         | HttpParams
@@ -1237,7 +1233,7 @@ export class HttpClient {
     url: string,
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body';
       params?:
         | HttpParams
@@ -1264,7 +1260,7 @@ export class HttpClient {
     url: string,
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body';
       params?:
         | HttpParams
@@ -1291,7 +1287,7 @@ export class HttpClient {
     url: string,
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body';
       params?:
         | HttpParams
@@ -1320,7 +1316,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'events';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -1347,7 +1343,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'events';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -1374,7 +1370,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'events';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -1401,7 +1397,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'events';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -1428,7 +1424,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'events';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -1456,7 +1452,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'response';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -1484,7 +1480,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'response';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -1512,7 +1508,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'response';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -1540,7 +1536,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'response';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -1568,7 +1564,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'response';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -1595,7 +1591,7 @@ export class HttpClient {
     url: string,
     options?: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body';
       params?:
         | HttpParams
@@ -1622,7 +1618,7 @@ export class HttpClient {
     url: string,
     options?: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body';
       params?:
         | HttpParams
@@ -1645,7 +1641,7 @@ export class HttpClient {
     url: string,
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body' | 'events' | 'response';
       params?:
         | HttpParams
@@ -1674,7 +1670,7 @@ export class HttpClient {
     url: string,
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body';
       params?:
         | HttpParams
@@ -1702,7 +1698,7 @@ export class HttpClient {
     url: string,
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body';
       params?:
         | HttpParams
@@ -1729,7 +1725,7 @@ export class HttpClient {
     url: string,
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body';
       params?:
         | HttpParams
@@ -1758,7 +1754,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'events';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -1786,7 +1782,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'events';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -1814,7 +1810,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'events';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -1842,7 +1838,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'events';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -1870,7 +1866,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'events';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -1898,7 +1894,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'response';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -1926,7 +1922,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'response';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -1954,7 +1950,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'response';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -1982,7 +1978,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'response';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -2010,7 +2006,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'response';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -2037,7 +2033,7 @@ export class HttpClient {
     url: string,
     options?: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body';
       params?:
         | HttpParams
@@ -2065,7 +2061,7 @@ export class HttpClient {
     url: string,
     options?: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body';
       params?:
         | HttpParams
@@ -2090,7 +2086,7 @@ export class HttpClient {
     url: string,
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body' | 'events' | 'response';
       params?:
         | HttpParams
@@ -2119,7 +2115,7 @@ export class HttpClient {
     url: string,
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body';
       params?:
         | HttpParams
@@ -2145,7 +2141,7 @@ export class HttpClient {
     url: string,
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body';
       params?:
         | HttpParams
@@ -2171,7 +2167,7 @@ export class HttpClient {
     url: string,
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body';
       params?:
         | HttpParams
@@ -2199,7 +2195,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'events';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -2226,7 +2222,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'events';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -2253,7 +2249,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'events';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -2280,7 +2276,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'events';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -2307,7 +2303,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'events';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -2334,7 +2330,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'response';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -2361,7 +2357,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'response';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -2388,7 +2384,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'response';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -2415,7 +2411,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'response';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -2442,7 +2438,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'response';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -2468,7 +2464,7 @@ export class HttpClient {
     url: string,
     options?: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body';
       params?:
         | HttpParams
@@ -2494,7 +2490,7 @@ export class HttpClient {
     url: string,
     options?: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body';
       params?:
         | HttpParams
@@ -2518,7 +2514,7 @@ export class HttpClient {
     url: string,
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body' | 'events' | 'response';
       params?:
         | HttpParams
@@ -2548,7 +2544,7 @@ export class HttpClient {
     body: any | null,
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body';
       params?:
         | HttpParams
@@ -2576,7 +2572,7 @@ export class HttpClient {
     body: any | null,
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body';
       params?:
         | HttpParams
@@ -2604,7 +2600,7 @@ export class HttpClient {
     body: any | null,
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body';
       params?:
         | HttpParams
@@ -2635,7 +2631,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'events';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -2664,7 +2660,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'events';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -2693,7 +2689,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'events';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -2722,7 +2718,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'events';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -2751,7 +2747,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'events';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -2780,7 +2776,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'response';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -2809,7 +2805,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'response';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -2838,7 +2834,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'response';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -2867,7 +2863,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'response';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -2896,7 +2892,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'response';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -2924,7 +2920,7 @@ export class HttpClient {
     body: any | null,
     options?: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body';
       params?:
         | HttpParams
@@ -2953,7 +2949,7 @@ export class HttpClient {
     body: any | null,
     options?: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body';
       params?:
         | HttpParams
@@ -2976,7 +2972,7 @@ export class HttpClient {
     body: any | null,
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body' | 'events' | 'response';
       params?:
         | HttpParams
@@ -3006,7 +3002,7 @@ export class HttpClient {
     body: any | null,
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body';
       params?:
         | HttpParams
@@ -3035,7 +3031,7 @@ export class HttpClient {
     body: any | null,
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body';
       params?:
         | HttpParams
@@ -3064,7 +3060,7 @@ export class HttpClient {
     body: any | null,
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body';
       params?:
         | HttpParams
@@ -3095,7 +3091,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'events';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -3124,7 +3120,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'events';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -3154,7 +3150,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'events';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -3184,7 +3180,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'events';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -3214,7 +3210,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'events';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -3244,7 +3240,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'response';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -3274,7 +3270,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'response';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -3304,7 +3300,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'response';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -3334,7 +3330,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'response';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -3365,7 +3361,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'response';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -3393,7 +3389,7 @@ export class HttpClient {
     body: any | null,
     options?: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body';
       params?:
         | HttpParams
@@ -3423,7 +3419,7 @@ export class HttpClient {
     body: any | null,
     options?: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body';
       params?:
         | HttpParams
@@ -3448,7 +3444,7 @@ export class HttpClient {
     body: any | null,
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body' | 'events' | 'response';
       params?:
         | HttpParams
@@ -3479,7 +3475,7 @@ export class HttpClient {
     body: any | null,
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body';
       params?:
         | HttpParams
@@ -3507,7 +3503,7 @@ export class HttpClient {
     body: any | null,
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body';
       params?:
         | HttpParams
@@ -3535,7 +3531,7 @@ export class HttpClient {
     body: any | null,
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body';
       params?:
         | HttpParams
@@ -3565,7 +3561,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'events';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -3594,7 +3590,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'events';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -3623,7 +3619,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'events';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -3652,7 +3648,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'events';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -3681,7 +3677,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'events';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -3710,7 +3706,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'response';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -3739,7 +3735,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'response';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -3768,7 +3764,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'response';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -3797,7 +3793,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'response';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -3826,7 +3822,7 @@ export class HttpClient {
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
       observe: 'response';
-      context?: HttpContext;
+
       params?:
         | HttpParams
         | {
@@ -3853,7 +3849,7 @@ export class HttpClient {
     body: any | null,
     options?: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body';
       params?:
         | HttpParams
@@ -3881,7 +3877,7 @@ export class HttpClient {
     body: any | null,
     options?: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
+
       observe?: 'body';
       params?:
         | HttpParams
@@ -3905,7 +3901,6 @@ export class HttpClient {
     body: any | null,
     options: {
       headers?: HttpHeaders | { [header: string]: string | string[] };
-      context?: HttpContext;
       observe?: 'body' | 'events' | 'response';
       params?:
         | HttpParams

@@ -2,7 +2,6 @@
 
 export { HttpBackend, HttpHandler } from './backend';
 export { HttpClient } from './client';
-export { HttpContext, HttpContextToken } from './context';
 export { FetchBackend } from './fetch';
 export { HttpHeaders } from './headers';
 export {
