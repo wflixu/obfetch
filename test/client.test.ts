@@ -22,7 +22,7 @@ describe('suite httclient', () => {
     const res: any = await lastValueFrom(http.get('/ping'));
     expect(res).toMatchInlineSnapshot(`
       {
-        "pong": "hello world !",
+        "pong": "hello world !!!",
       }
     `);
   });
