@@ -6,7 +6,7 @@ const fastify = Fastify({
 
 // Declare a route
 fastify.get("/ping", async function handler(request, reply) {
-  return { pong: "hello world !" };
+  return { pong: "hello world !!!" };
 });
 
 fastify.post("/ping", async function handler(request, reply) {
