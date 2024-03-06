@@ -73,7 +73,6 @@ export function responseDataFormatInterceptor(req: HttpRequest<unknown>, next: H
 // Use interceptor
 http.use([tokenInterceptor,responseDataFormatInterceptor])
 
-//
 
 ```
 
